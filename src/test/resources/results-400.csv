@@ -1,0 +1,21 @@
+round, method, time, total cost
+1,exhaustive,32,420
+2,exhaustive,19,420
+3,exhaustive,16,420
+4,exhaustive,16,420
+5,exhaustive,15,420
+1,ER,32,1177
+2,ER,16,1183
+3,ER,9,1156
+4,ER,16,1116
+5,ER,15,1138
+1,random,16,1915
+2,random,0,1829
+3,random,0,1814
+4,random,4,1810
+5,random,0,1857
+1,RE,26,1762
+2,RE,0,1777
+3,RE,0,1755
+4,RE,15,1850
+5,RE,16,1770

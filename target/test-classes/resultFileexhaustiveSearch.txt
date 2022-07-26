@@ -1,0 +1,4 @@
+method: exhaustiveSearch
+File: matrixTest800.txt
+Time: 78
+Total cost: 815

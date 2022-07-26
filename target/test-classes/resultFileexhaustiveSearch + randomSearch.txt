@@ -1,0 +1,4 @@
+method: exhaustiveSearch + randomSearch
+File: matrixTest3200.txt
+Time: 2531
+Total cost: 9262
