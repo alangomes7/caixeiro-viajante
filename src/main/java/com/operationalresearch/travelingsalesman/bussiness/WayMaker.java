@@ -5,6 +5,11 @@ import com.operationalresearch.travelingsalesman.model.Node;
 import com.operationalresearch.travelingsalesman.model.Pathway;
 import java.util.ArrayList;
 
+/**
+ * This class is the core of project. Here we have all local searches.
+ *
+ * @author - @alangomes7
+ */
 public class WayMaker {
 
   public enum PathMode {
@@ -88,7 +93,7 @@ public class WayMaker {
   }
 
   /**
-   * Test if array[int] elements contains item;
+   * Test if array[int] elements contains item.
    *
    * @param elements array to scam.
    * @param item element to verify existence.
@@ -152,6 +157,12 @@ public class WayMaker {
     return new Node(lastNode.getTo(), initialNode.getFrom(), cost);
   }
 
+  /**
+   * Calculates the cost of the nodes.
+   *
+   * @param nodes - nodes that shape the way.
+   * @return - the cost of walk the given path.
+   */
   public int calculateCost(ArrayList<Node> nodes) {
     int cost = 0;
     for (Node node : nodes) {
@@ -160,6 +171,12 @@ public class WayMaker {
     return cost;
   }
 
+  /**
+   * Gets previous nodes from a given pathway.
+   *
+   * @param nodesFrom - The arraylist with the previous node.
+   * @return - The list with the previous node.
+   */
   private ArrayList<Integer> getNodesFrom(ArrayList<Node> nodesFrom) {
     ArrayList<Integer> fromList = new ArrayList<>();
     for (Node nodeItem : nodesFrom) {

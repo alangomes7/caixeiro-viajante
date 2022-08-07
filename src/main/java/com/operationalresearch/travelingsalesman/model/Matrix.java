@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * This class models the matrix of adjancentes. It is represents the points and their costs to move
+ * to another point.
+ *
+ * @author - @alangomes7
+ */
 @Data
 @NoArgsConstructor
 public class Matrix {

@@ -8,13 +8,18 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * This class contains all the support operations for the project.
  *
- * @version 1.0
+ * @author - @alangomes7
  */
+@Slf4j
 public class Utils {
 
   /**
@@ -39,15 +44,16 @@ public class Utils {
       }
     }
     // save matrix in String
-    String contentFile = "" + matrixSize + "\n";
+    StringBuilder contentFile = new StringBuilder("" + matrixSize + "\n");
     for (int i = 0; i < matrixSize; i++) {
       String contentLine = Arrays.toString(matrix[i]);
       contentLine = contentLine.replaceAll("\\[", "").replaceAll("\\]", "");
       contentLine = contentLine.replaceAll(",", "");
-      contentFile += contentLine;
+      contentFile.append(contentLine);
     }
     // save database file
-    stringToFile(contentFile.split("\n"), database);
+    stringToFile(contentFile.toString().split("\n"), database);
+    log.debug("Database created.");
   }
 
   /**
@@ -64,6 +70,7 @@ public class Utils {
         line = line.strip() + "\n";
         writer.write(line);
       }
+      log.debug("StringList saved into " + fileOutput.getAbsolutePath());
     }
   }
 
@@ -78,16 +85,17 @@ public class Utils {
       String content = Files.readString(Paths.get(fileSource.getAbsolutePath()));
       String[] contentArray = content.split("\n");
       int matrixSize = Integer.parseInt(contentArray[0].replaceAll("\\s+", ""));
+      log.debug("Matrix read from: " + fileSource.getAbsolutePath());
       return new Matrix(contentArray, matrixSize);
     } catch (IOException | NumberFormatException e) {
-      String error = e.getMessage();
+      log.error(e.getMessage());
       String[] empty = {};
       return new Matrix(empty, 0);
     }
   }
 
   /**
-   * Creates a random nunber in the range given.
+   * Creates a random number in the range given.
    *
    * @param minimum down limit of range.
    * @param maximum up limit of range.
@@ -95,5 +103,19 @@ public class Utils {
    */
   public int randomNumber(int minimum, int maximum) {
     return (int) ((Math.random() * (maximum - minimum)) + minimum);
+  }
+
+  /**
+   * Converts timeStamp into desired date.
+   *
+   * @param timeStamp - time in milliseconds.
+   * @return - parsed timeStamp.
+   */
+  public String timeStampToDate(long timeStamp) {
+    Date date = new Date(timeStamp);
+    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy, HH:mm:ss.SSS");
+    String timeStampString = formatter.format(date);
+    log.debug("Time stamp: " + timeStampString);
+    return timeStampString;
   }
 }

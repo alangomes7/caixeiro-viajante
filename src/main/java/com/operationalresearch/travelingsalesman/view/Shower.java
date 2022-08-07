@@ -7,7 +7,7 @@ import java.io.IOException;
 /**
  * Makes all output methods data.
  *
- * @author @alangomes7
+ * @author - @alangomes7
  */
 public class Shower {
 
@@ -17,7 +17,7 @@ public class Shower {
   /**
    * Makes the main output: a file description about the test.
    *
-   * @param roundN - The number of test. It's possible run the same test multiple times automatic.
+   * @param currentlyTime - The timeStamp.
    * @param matrixSize - The size of matrix.
    * @param method - The type of method used to solve the problem.
    * @param timeExecutionInSeconds - The time spent to solve the problem.
@@ -25,7 +25,7 @@ public class Shower {
    * @throws IOException - If some error occurs with output data.
    */
   public static void writeResults(
-      int roundN,
+      long currentlyTime,
       int matrixSize,
       String method,
       long timeExecutionInSeconds,
@@ -33,9 +33,15 @@ public class Shower {
       File pathTestResources)
       throws IOException {
     Utils utils = new Utils();
-    String[] header = new String[] {"round, method, time, total cost"};
+    String[] header =
+        new String[] {
+          "time stamp - date, time stamp - time, method, time execution - milliseconds, total cost"
+        };
+    String timeStamp = utils.timeStampToDate(currentlyTime);
     String[] line =
-        new String[] {"" + roundN + "," + method + "," + timeExecutionInSeconds + "," + totalCost};
+        new String[] {
+          "" + timeStamp + "," + method + "," + timeExecutionInSeconds + "," + totalCost
+        };
     File resultsFile =
         new File(pathTestResources.getAbsolutePath() + "/results-" + matrixSize + ".csv");
     if (!resultsFile.exists()) {

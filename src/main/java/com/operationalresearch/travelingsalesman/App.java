@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Executes the program. Here we find the starts of application.
  *
- * @author @alangomes7
+ * @author - @alangomes7
  */
 @Slf4j
 public class App {
@@ -40,13 +40,12 @@ public class App {
    * Generate a solution using the indicated heuristic.
    *
    * @param matrix - The matrix to find a solution (way).
-   * @param roundN - The number of execution of solution.
    * @param matrixSize - The matrix size.
    * @param heuristic - The type of heuristic used tp create a solution.
    * @throws IOException - If some error occurs with output file.
    */
-  private static void generateSolution(
-      Matrix matrix, int roundN, int matrixSize, HEURISTIC heuristic) throws IOException {
+  private static void generateSolution(Matrix matrix, int matrixSize, HEURISTIC heuristic)
+      throws IOException {
     Pathway pathway = new Pathway();
     long initialTime = 0;
     long finalTime = 0;
@@ -79,27 +78,29 @@ public class App {
         method = heuristic.toString();
         break;
       default:
-        System.out.println("Method invalid");
+        log.error("Method invalid!");
     }
     long timeSpent = (finalTime - initialTime);
-    Shower.writeResults(
-        roundN, matrixSize, method, timeSpent, pathway.getTotalCost(), pathTestResources);
+    long zero = 0;
+    if (timeSpent > zero) {
+      Shower.writeResults(
+          initialTime, matrixSize, method, timeSpent, pathway.getTotalCost(), pathTestResources);
+    }
   }
 
   /**
    * Find a solution.
    *
-   * @param roundN - The execution's number. This method can be run multiple times automatically.
    * @param matrixSize - The matrix's size.
    * @param matrixSource - The source matrix file.
    * @param heuristic - The method used to find a solution.
    * @throws IOException - If some error occurs with source file.
    */
-  private static void findSolution(
-      int roundN, int matrixSize, File matrixSource, HEURISTIC heuristic) throws IOException {
+  private static void findSolution(int matrixSize, File matrixSource, HEURISTIC heuristic)
+      throws IOException {
     File matrixFile = new File(matrixSource.getAbsolutePath());
     Matrix matrix = utils.fileToMatrix(matrixFile);
-    generateSolution(matrix, roundN, matrixSize, heuristic);
+    generateSolution(matrix, matrixSize, heuristic);
   }
 
   /**
@@ -113,8 +114,8 @@ public class App {
     initialize();
     // user input methods
     int maxRounds = 10;
-    int matrixSize = 10;
-    HEURISTIC heuristic = HEURISTIC.RADONEXHAUSTIVE;
+    int matrixSize = 1000;
+    HEURISTIC heuristic = HEURISTIC.RANDOM;
     File matrixSource = new File("src/test/resources/matrixTest" + matrixSize + ".txt");
     try {
       // create database
@@ -122,7 +123,7 @@ public class App {
       // creates solutions
       int round = 1;
       while (round <= maxRounds) {
-        findSolution(round, matrixSize, matrixSource, heuristic);
+        findSolution(matrixSize, matrixSource, heuristic);
         round++;
       }
     } catch (IOException e) {

@@ -8,7 +8,6 @@ import com.operationalresearch.travelingsalesman.bussiness.WayMaker;
 import com.operationalresearch.travelingsalesman.model.Matrix;
 import com.operationalresearch.travelingsalesman.model.Pathway;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Paths;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
@@ -17,62 +16,71 @@ import org.junit.jupiter.api.Test;
 /**
  * Tests the support operations.
  *
- * @version 1.0
+ * @author - @alangomes7
  */
 @Slf4j
 public class UtilsTest {
   private static Utils utils;
   private static WayMaker wayMaker;
-  private static String pathFileResources;
-  private static String pathTestResources;
+  private static File matrixFile;
   private static Matrix matrixTests;
+  private static int matrixSize;
 
+  /** Here we initialize the main variables. This method is also called by "setup". */
   @BeforeAll
-  public static void initialize() throws IOException {
+  public static void initialize() {
+    log.debug("Tests started.\n");
     utils = new Utils();
     wayMaker = new WayMaker();
-    pathFileResources = Paths.get("src", "main", "/resources/").toFile().getAbsolutePath() + "/";
-    pathTestResources = Paths.get("src", "test", "/resources/").toFile().getAbsolutePath() + "/";
-    File matrixFile = new File(pathFileResources + "matrixTest.txt");
-    utils.createDatabase(matrixFile, 4);
+    String pathTestResources =
+        Paths.get("src", "test", "/resources/").toFile().getAbsolutePath() + "/";
+    matrixFile = new File(pathTestResources + "matrixForTests.txt");
+    matrixSize = 10;
+    createDatabase_shouldBeSuccess();
     matrixTests = utils.fileToMatrix(matrixFile);
   }
 
+  /** Create a database creation is success. */
+  public static void createDatabase_shouldBeSuccess() {
+    // delete matrix file to avoid append
+    if (matrixFile.exists()) {
+      log.debug("Database deleted: " + matrixFile.delete());
+    }
+    assertDoesNotThrow(() -> utils.createDatabase(matrixFile, matrixSize));
+  }
+
+  /** Tests the readMatrix operation. */
   @Test
   public void readMatrix_shouldBeSuccess() {
-    assertEquals(10, matrixTests.getSize());
-    System.out.println(matrixTests);
+    assertEquals(matrixSize, matrixTests.getSize());
+    log.debug("The matrix:\n" + matrixTests.toString());
   }
 
+  /** Tests the exhaustiveSearch operation. */
   @Test
   public void exhaustiveSearch_shouldBeSuccess() {
-    Pathway exhaustiveSearch = wayMaker.exhaustiveSearch(matrixTests);
-    System.out.println(exhaustiveSearch.getTotalCost());
+    assertDoesNotThrow(() -> wayMaker.exhaustiveSearch(matrixTests));
   }
 
-  @Test
-  public void createDatabase_shouldBeSuccess() {
-    File database = new File(pathTestResources + "database.txt");
-    assertDoesNotThrow(() -> utils.createDatabase(database, 100));
-  }
-
+  /** Tests random search operation. */
   @Test
   public void randomSearch_shouldBeSuccess() {
-    Pathway randomSearch = wayMaker.randomSearch(matrixTests);
-    System.out.println(randomSearch.getTotalCost());
+    assertDoesNotThrow(() -> wayMaker.randomSearch(matrixTests));
   }
 
+  /** Tests mix search operation: exhaustive search + random search. */
   @Test
   public void mixArraysExhaustive_shouldBeSuccess() {
     Pathway pathwayParent = wayMaker.exhaustiveSearch(matrixTests);
-    Pathway pathway = wayMaker.mixArrays(pathwayParent, matrixTests, WayMaker.PathMode.EXHAUSTIVE);
-    System.out.println(pathway);
+    assertDoesNotThrow(
+        () -> wayMaker.mixArrays(pathwayParent, matrixTests, WayMaker.PathMode.EXHAUSTIVE));
   }
 
+  /** Tests mix search operation: random search + exhaustive search. */
   @Test
   public void mixArraysRandom_shouldBeSuccess() {
     Pathway pathwayParent = wayMaker.exhaustiveSearch(matrixTests);
-    Pathway pathway = wayMaker.mixArrays(pathwayParent, matrixTests, WayMaker.PathMode.RANDOM);
-    System.out.println(pathway);
+    assertDoesNotThrow(
+        () -> wayMaker.mixArrays(pathwayParent, matrixTests, WayMaker.PathMode.RANDOM));
   }
 }
