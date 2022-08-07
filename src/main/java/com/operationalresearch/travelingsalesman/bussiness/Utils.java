@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class Utils {
 
   /**
-   * Creates the file with matrix.
+   * Makes the database source: a file with matrix.
    *
    * @param database path to salve the file.
    * @param matrixSize size/order of matrix.

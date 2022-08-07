@@ -34,7 +34,7 @@ public class UtilsTest {
     pathFileResources = Paths.get("src", "main", "/resources/").toFile().getAbsolutePath() + "/";
     pathTestResources = Paths.get("src", "test", "/resources/").toFile().getAbsolutePath() + "/";
     File matrixFile = new File(pathFileResources + "matrixTest.txt");
-    utils.createDatabase(matrixFile,4);
+    utils.createDatabase(matrixFile, 4);
     matrixTests = utils.fileToMatrix(matrixFile);
   }
 
@@ -63,16 +63,16 @@ public class UtilsTest {
   }
 
   @Test
-  public void mixArraysExhaustive_shouldBeSuccess(){
+  public void mixArraysExhaustive_shouldBeSuccess() {
     Pathway pathwayParent = wayMaker.exhaustiveSearch(matrixTests);
-    Pathway pathway = wayMaker.mixArrays(pathwayParent,matrixTests, WayMaker.PathMode.EXHAUSTIVE);
+    Pathway pathway = wayMaker.mixArrays(pathwayParent, matrixTests, WayMaker.PathMode.EXHAUSTIVE);
     System.out.println(pathway);
   }
 
   @Test
-  public void mixArraysRandom_shouldBeSuccess(){
+  public void mixArraysRandom_shouldBeSuccess() {
     Pathway pathwayParent = wayMaker.exhaustiveSearch(matrixTests);
-    Pathway pathway = wayMaker.mixArrays(pathwayParent,matrixTests, WayMaker.PathMode.RANDOM);
+    Pathway pathway = wayMaker.mixArrays(pathwayParent, matrixTests, WayMaker.PathMode.RANDOM);
     System.out.println(pathway);
   }
 }

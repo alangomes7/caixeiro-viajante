@@ -1,0 +1,5 @@
+/target
+/.idea
+*bak
+/src/test/*.txt
+/src/test/*.csv

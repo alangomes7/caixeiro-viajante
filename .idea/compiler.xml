@@ -10,8 +10,5 @@
         <module name="travelingsalesman" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="PesquisaOperacional" target="1.7" />
-    </bytecodeTargetLevel>
   </component>
 </project>

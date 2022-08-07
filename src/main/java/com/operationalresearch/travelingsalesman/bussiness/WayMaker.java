@@ -8,7 +8,8 @@ import java.util.ArrayList;
 public class WayMaker {
 
   public enum PathMode {
-    EXHAUSTIVE, RANDOM
+    EXHAUSTIVE,
+    RANDOM
   }
 
   /**
@@ -90,7 +91,7 @@ public class WayMaker {
    * Test if array[int] elements contains item;
    *
    * @param elements array to scam.
-   * @param item     element to verify existence.
+   * @param item element to verify existence.
    * @return true if elements exists or false otherwise.
    */
   public boolean containsNodeEnd(ArrayList<Integer> elements, int item) {
@@ -105,7 +106,7 @@ public class WayMaker {
   /**
    * Search for the minimum cost.
    *
-   * @param costs   array of cost for scam.
+   * @param costs array of cost for scam.
    * @param maxCost the maxCost for filter.
    * @return String with 'minCost,index'.
    */
@@ -122,13 +123,13 @@ public class WayMaker {
         indexMinCost = i;
       }
     }
-    return new int[]{minCost, indexMinCost};
+    return new int[] {minCost, indexMinCost};
   }
 
   /**
    * Replace the minimum cost with zero.
    *
-   * @param costs     array of costs.
+   * @param costs array of costs.
    * @param costIndex index of cost to be updated.
    * @return updated array of costs.
    */
@@ -141,7 +142,7 @@ public class WayMaker {
    * Finalizes the last node element.
    *
    * @param matrix the matrix to get cost.
-   * @param nodes  the node list to build last node.
+   * @param nodes the node list to build last node.
    * @return the last node to return to initial point.
    */
   public Node finalNode(Matrix matrix, ArrayList<Node> nodes) {
@@ -169,15 +170,16 @@ public class WayMaker {
 
   /**
    * Creates new pathways using combinations of random and exhaustive solutions.
+   *
    * @param parent the parent to provide the first part of way.
    * @param matrix the database to build the pathway.
    * @param mode the mode to use to complete the pathway.
    * @return the mixed and complete pathway.
    */
-  public Pathway mixArrays(Pathway parent, Matrix matrix , PathMode mode){
+  public Pathway mixArrays(Pathway parent, Matrix matrix, PathMode mode) {
     ArrayList<Node> child = new ArrayList<>();
     // receives the first part from mother
-    for(int i = 0; i < parent.getPath().size() / 2; i++){
+    for (int i = 0; i < parent.getPath().size() / 2; i++) {
       child.add(parent.getPath().get(i));
     }
     if (mode == PathMode.EXHAUSTIVE) {
