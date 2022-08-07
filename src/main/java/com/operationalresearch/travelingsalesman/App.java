@@ -29,6 +29,36 @@ public class App {
     EXHAUSTIVERANDOM
   }
 
+  /**
+   * The main method.
+   *
+   * @param args - arguments to run the application.
+   */
+  public static void main(String[] args) {
+    log.info("--- Started  ---");
+    // initialize variables
+    initialize();
+    // user input methods
+    int maxRounds = 10;
+    int matrixSize = 1000;
+    HEURISTIC heuristic = HEURISTIC.RADONEXHAUSTIVE;
+    File matrixSource = new File("src/test/resources/matrixTest" + matrixSize + ".txt");
+    try {
+      // create database
+      utils.createDatabase(matrixSource, matrixSize);
+      // creates solutions
+      int round = 1;
+      while (round <= maxRounds) {
+        findSolution(matrixSize, matrixSource, heuristic);
+        round++;
+      }
+    } catch (IOException e) {
+      log.error("error: " + e.getMessage());
+      throw new RuntimeException(e);
+    }
+    log.info("--- Finished  ---");
+  }
+
   /** Initialize main variables. Sometimes this method is also called setup. */
   private static void initialize() {
     utils = new Utils();
@@ -101,35 +131,5 @@ public class App {
     File matrixFile = new File(matrixSource.getAbsolutePath());
     Matrix matrix = utils.fileToMatrix(matrixFile);
     generateSolution(matrix, matrixSize, heuristic);
-  }
-
-  /**
-   * The main class.
-   *
-   * @param args - arguments to run the application.
-   */
-  public static void main(String[] args) {
-    log.info("--- Started  ---");
-    // initialize variables
-    initialize();
-    // user input methods
-    int maxRounds = 10;
-    int matrixSize = 1000;
-    HEURISTIC heuristic = HEURISTIC.RANDOM;
-    File matrixSource = new File("src/test/resources/matrixTest" + matrixSize + ".txt");
-    try {
-      // create database
-      utils.createDatabase(matrixSource, matrixSize);
-      // creates solutions
-      int round = 1;
-      while (round <= maxRounds) {
-        findSolution(matrixSize, matrixSource, heuristic);
-        round++;
-      }
-    } catch (IOException e) {
-      log.error("error: " + e.getMessage());
-      throw new RuntimeException(e);
-    }
-    log.info("--- Finished  ---");
   }
 }

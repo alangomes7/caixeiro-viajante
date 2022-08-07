@@ -45,7 +45,7 @@
     </dependency>
   </dependencies>
   <build>
-    <pluginManagement/>
+    <pluginManagement></pluginManagement>
     <plugins>
       <!-- Google checks to format code -->
       <plugin>
